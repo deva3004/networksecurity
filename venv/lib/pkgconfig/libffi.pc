@@ -1,0 +1,11 @@
+prefix=/Users/devashish/Desktop/krish_ds/networkSecurity/ven
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+toolexeclibdir=${libdir}
+includedir=/Users/devashish/Desktop/krish_ds/networkSecurity/ven/include
+
+Name: libffi
+Description: Library supporting Foreign Function Interfaces
+Version: 3.4.8
+Libs: -L${toolexeclibdir} -lffi
+Cflags: -I${includedir}
