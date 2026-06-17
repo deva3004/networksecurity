@@ -1,3 +1,0 @@
-[2026-06-17 13:41:43,707] 34 networksecurity - INFO - Data loaded: 11055 records from Network_Data/phisingData.csv
-[2026-06-17 13:41:44,546] 44 networksecurity - INFO - Connected to MongoDB successfully
-[2026-06-17 13:41:52,712] 48 networksecurity - INFO - Inserted 11055 records into NetworkSecurity.NetworkData

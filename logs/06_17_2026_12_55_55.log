@@ -1,2 +1,0 @@
-[2026-06-17 12:55:55,406] 34 networksecurity - INFO - Data loaded: 11055 records from Network_Data/phisingData.csv
-[2026-06-17 12:55:55,440] 16 networksecurity - ERROR - Error in script: [/Users/devashish/Desktop/krish_ds/networkSecurity/push_data.py] at line [42] — The DNS query name does not exist: _mongodb._tcp.your-cluster.mongodb.net.
