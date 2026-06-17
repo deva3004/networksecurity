@@ -1,0 +1,2 @@
+[2026-06-17 12:48:30,640] 25 networksecurity - INFO - Data loaded: 11055 records from Network_Data/phisingData.csv
+[2026-06-17 12:48:30,641] 16 networksecurity - ERROR - Error in script: [/Users/devashish/Desktop/krish_ds/networkSecurity/push_data.py] at line [33] — Username and password must be escaped according to RFC 3986, use urllib.parse.quote_plus
