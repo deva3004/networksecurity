@@ -3,6 +3,8 @@ import sys
 import yaml
 import numpy as np
 import pickle
+from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import f1_score
 
 from networksecurity.exception.exception import NetworkSecurityException
 from networksecurity.logging.logger import logger
@@ -62,5 +64,63 @@ def load_object(file_path: str) -> object:
             raise Exception(f"File not found: {file_path}")
         with open(file_path, "rb") as f:
             return pickle.load(f)
+    except Exception as e:
+        raise NetworkSecurityException(e, sys)
+
+def evaluate_models(
+    X_train: np.ndarray,
+    y_train: np.ndarray,
+    X_test: np.ndarray,
+    y_test: np.ndarray,
+    models: dict,
+    param_grids: dict,
+) -> dict:
+    """
+    Run GridSearchCV for each model in `models` using its corresponding param grid.
+
+    Returns a report dict keyed by model name:
+        {
+            "best_estimator": <fitted estimator>,
+            "best_params":    {param: value, ...},
+            "cv_f1":          float,   # mean CV score on train
+            "train_f1":       float,
+            "test_f1":        float,
+        }
+    """
+    try:
+        report = {}
+
+        for name, model in models.items():
+            logger.info("Running GridSearchCV for %s ...", name)
+
+            grid_search = GridSearchCV(
+                estimator=model,
+                param_grid=param_grids[name],
+                scoring="f1",
+                cv=3,
+                n_jobs=-1,
+                refit=True,
+            )
+            grid_search.fit(X_train, y_train)
+
+            best_estimator = grid_search.best_estimator_
+            train_f1 = f1_score(y_train, best_estimator.predict(X_train))
+            test_f1  = f1_score(y_test,  best_estimator.predict(X_test))
+
+            report[name] = {
+                "best_estimator": best_estimator,
+                "best_params":    grid_search.best_params_,
+                "cv_f1":          grid_search.best_score_,
+                "train_f1":       train_f1,
+                "test_f1":        test_f1,
+            }
+
+            logger.info(
+                "[%s] best_params=%s | CV F1=%.4f | Train F1=%.4f | Test F1=%.4f",
+                name, grid_search.best_params_,
+                grid_search.best_score_, train_f1, test_f1,
+            )
+
+        return report
     except Exception as e:
         raise NetworkSecurityException(e, sys)

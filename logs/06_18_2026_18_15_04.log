@@ -1,0 +1,40 @@
+[2026-06-18 18:15:04,908] 19 networksecurity - INFO - ========== Training Pipeline Started ==========
+[2026-06-18 18:15:04,908] 94 networksecurity - INFO - Initiating data ingestion
+[2026-06-18 18:15:08,094] 45 networksecurity - INFO - Exported 22110 records from MongoDB collection 'NetworkData'
+[2026-06-18 18:15:08,141] 64 networksecurity - INFO - Data saved to feature store: Artifacts/06_18_2026_18_15_04/data_ingestion/feature_store/phisingData.csv
+[2026-06-18 18:15:08,186] 87 networksecurity - INFO - Train set saved: Artifacts/06_18_2026_18_15_04/data_ingestion/ingested/train.csv
+[2026-06-18 18:15:08,186] 88 networksecurity - INFO - Test set saved: Artifacts/06_18_2026_18_15_04/data_ingestion/ingested/test.csv
+[2026-06-18 18:15:08,186] 103 networksecurity - INFO - Data ingestion artifact: DataIngestionArtifact(trained_file_path='Artifacts/06_18_2026_18_15_04/data_ingestion/ingested/train.csv', test_file_path='Artifacts/06_18_2026_18_15_04/data_ingestion/ingested/test.csv')
+[2026-06-18 18:15:08,186] 27 networksecurity - INFO - Data Ingestion Artifact: DataIngestionArtifact(trained_file_path='Artifacts/06_18_2026_18_15_04/data_ingestion/ingested/train.csv', test_file_path='Artifacts/06_18_2026_18_15_04/data_ingestion/ingested/test.csv')
+[2026-06-18 18:15:08,188] 85 networksecurity - INFO - Initiating data validation
+[2026-06-18 18:15:08,201] 38 networksecurity - INFO - Column count validated: 31 columns
+[2026-06-18 18:15:08,201] 52 networksecurity - INFO - All column names validated successfully
+[2026-06-18 18:15:08,201] 38 networksecurity - INFO - Column count validated: 31 columns
+[2026-06-18 18:15:08,201] 52 networksecurity - INFO - All column names validated successfully
+[2026-06-18 18:15:08,244] 78 networksecurity - INFO - Drift report saved. Drifted columns (0): []
+[2026-06-18 18:15:08,288] 118 networksecurity - INFO - Data validation artifact: DataValidationArtifact(validation_status=True, valid_train_file_path='Artifacts/06_18_2026_18_15_04/data_validation/validated/train.csv', valid_test_file_path='Artifacts/06_18_2026_18_15_04/data_validation/validated/test.csv', invalid_train_file_path='Artifacts/06_18_2026_18_15_04/data_validation/invalid/train.csv', invalid_test_file_path='Artifacts/06_18_2026_18_15_04/data_validation/invalid/test.csv', drift_report_file_path='Artifacts/06_18_2026_18_15_04/data_validation/drift_report/report.yaml')
+[2026-06-18 18:15:08,288] 33 networksecurity - INFO - Data Validation Artifact: DataValidationArtifact(validation_status=True, valid_train_file_path='Artifacts/06_18_2026_18_15_04/data_validation/validated/train.csv', valid_test_file_path='Artifacts/06_18_2026_18_15_04/data_validation/validated/test.csv', invalid_train_file_path='Artifacts/06_18_2026_18_15_04/data_validation/invalid/train.csv', invalid_test_file_path='Artifacts/06_18_2026_18_15_04/data_validation/invalid/test.csv', drift_report_file_path='Artifacts/06_18_2026_18_15_04/data_validation/drift_report/report.yaml')
+[2026-06-18 18:15:08,288] 46 networksecurity - INFO - Initiating data transformation
+[2026-06-18 18:15:08,305] 38 networksecurity - INFO - Numpy array saved: Artifacts/06_18_2026_18_15_04/data_transformation/transformed/train.npy
+[2026-06-18 18:15:08,305] 38 networksecurity - INFO - Numpy array saved: Artifacts/06_18_2026_18_15_04/data_transformation/transformed/test.npy
+[2026-06-18 18:15:08,306] 56 networksecurity - INFO - Object saved: Artifacts/06_18_2026_18_15_04/data_transformation/transformed_object/preprocessing.pkl
+[2026-06-18 18:15:08,306] 66 networksecurity - INFO - Data transformation complete — train shape: (17688, 31), test shape: (4422, 31)
+[2026-06-18 18:15:08,306] 39 networksecurity - INFO - Data Transformation Artifact: DataTransformationArtifact(transformed_object_file_path='Artifacts/06_18_2026_18_15_04/data_transformation/transformed_object/preprocessing.pkl', transformed_train_file_path='Artifacts/06_18_2026_18_15_04/data_transformation/transformed/train.npy', transformed_test_file_path='Artifacts/06_18_2026_18_15_04/data_transformation/transformed/test.npy')
+[2026-06-18 18:15:08,307] 68 networksecurity - INFO - Initiating model training with hyperparameter tuning
+[2026-06-18 18:15:08,307] 94 networksecurity - INFO - Running GridSearchCV for RandomForest ...
+[2026-06-18 18:15:13,586] 118 networksecurity - INFO - [RandomForest] best_params={'max_depth': None, 'min_samples_split': 2, 'n_estimators': 256} | CV F1=0.9843 | Train F1=0.9909 | Test F1=0.9856
+[2026-06-18 18:15:13,586] 94 networksecurity - INFO - Running GridSearchCV for GradientBoosting ...
+[2026-06-18 18:15:19,916] 118 networksecurity - INFO - [GradientBoosting] best_params={'learning_rate': 0.2, 'max_depth': 5, 'n_estimators': 128} | CV F1=0.9807 | Train F1=0.9863 | Test F1=0.9783
+[2026-06-18 18:15:19,916] 94 networksecurity - INFO - Running GridSearchCV for AdaBoost ...
+[2026-06-18 18:15:22,610] 118 networksecurity - INFO - [AdaBoost] best_params={'learning_rate': 1.5, 'n_estimators': 100} | CV F1=0.9442 | Train F1=0.9426 | Test F1=0.9388
+[2026-06-18 18:15:22,610] 94 networksecurity - INFO - Running GridSearchCV for DecisionTree ...
+[2026-06-18 18:15:22,941] 118 networksecurity - INFO - [DecisionTree] best_params={'criterion': 'entropy', 'max_depth': None, 'min_samples_split': 2} | CV F1=0.9815 | Train F1=0.9909 | Test F1=0.9851
+[2026-06-18 18:15:22,941] 94 networksecurity - INFO - Running GridSearchCV for LogisticRegression ...
+[2026-06-18 18:15:23,522] 118 networksecurity - INFO - [LogisticRegression] best_params={'C': 0.1, 'solver': 'lbfgs'} | CV F1=0.9372 | Train F1=0.9375 | Test F1=0.9314
+[2026-06-18 18:15:23,522] 87 networksecurity - INFO - Best model: RandomForest  (Test F1: 0.9856)
+[2026-06-18 18:15:23,612] 92 networksecurity - INFO - [RandomForest] Train — F1: 0.9909  Precision: 0.9891  Recall: 0.9927
+[2026-06-18 18:15:23,612] 97 networksecurity - INFO - [RandomForest] Test  — F1: 0.9856  Precision: 0.9803  Recall: 0.9909
+[2026-06-18 18:15:23,630] 56 networksecurity - INFO - Object saved: Artifacts/06_18_2026_18_15_04/model_trainer/trained_model/model.pkl
+[2026-06-18 18:15:23,630] 121 networksecurity - INFO - Saved RandomForest: Artifacts/06_18_2026_18_15_04/model_trainer/trained_model/model.pkl
+[2026-06-18 18:15:23,632] 45 networksecurity - INFO - Model Trainer Artifact: ModelTrainerArtifact(trained_model_file_path='Artifacts/06_18_2026_18_15_04/model_trainer/trained_model/model.pkl', train_metric_artifact=ClassificationMetricArtifact(f1_score=0.9909265046879726, precision_score=0.9891315286303713, recall_score=0.9927280072719927), test_metric_artifact=ClassificationMetricArtifact(f1_score=0.9855729596042869, precision_score=0.980319803198032, recall_score=0.9908827186075425))
+[2026-06-18 18:15:23,632] 47 networksecurity - INFO - ========== Training Pipeline Completed ==========
