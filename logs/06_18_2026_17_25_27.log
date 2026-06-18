@@ -1,0 +1,23 @@
+[2026-06-18 17:25:27,202] 14 networksecurity - INFO - ========== Training Pipeline Started ==========
+[2026-06-18 17:25:27,203] 94 networksecurity - INFO - Initiating data ingestion
+[2026-06-18 17:25:29,512] 45 networksecurity - INFO - Exported 22110 records from MongoDB collection 'NetworkData'
+[2026-06-18 17:25:29,564] 64 networksecurity - INFO - Data saved to feature store: Artifacts/06_18_2026_17_25_27/data_ingestion/feature_store/phisingData.csv
+[2026-06-18 17:25:29,615] 87 networksecurity - INFO - Train set saved: Artifacts/06_18_2026_17_25_27/data_ingestion/ingested/train.csv
+[2026-06-18 17:25:29,615] 88 networksecurity - INFO - Test set saved: Artifacts/06_18_2026_17_25_27/data_ingestion/ingested/test.csv
+[2026-06-18 17:25:29,615] 103 networksecurity - INFO - Data ingestion artifact: DataIngestionArtifact(trained_file_path='Artifacts/06_18_2026_17_25_27/data_ingestion/ingested/train.csv', test_file_path='Artifacts/06_18_2026_17_25_27/data_ingestion/ingested/test.csv')
+[2026-06-18 17:25:29,615] 22 networksecurity - INFO - Data Ingestion Artifact: DataIngestionArtifact(trained_file_path='Artifacts/06_18_2026_17_25_27/data_ingestion/ingested/train.csv', test_file_path='Artifacts/06_18_2026_17_25_27/data_ingestion/ingested/test.csv')
+[2026-06-18 17:25:29,617] 85 networksecurity - INFO - Initiating data validation
+[2026-06-18 17:25:29,631] 38 networksecurity - INFO - Column count validated: 31 columns
+[2026-06-18 17:25:29,631] 52 networksecurity - INFO - All column names validated successfully
+[2026-06-18 17:25:29,631] 38 networksecurity - INFO - Column count validated: 31 columns
+[2026-06-18 17:25:29,631] 52 networksecurity - INFO - All column names validated successfully
+[2026-06-18 17:25:29,682] 78 networksecurity - INFO - Drift report saved. Drifted columns (0): []
+[2026-06-18 17:25:29,729] 118 networksecurity - INFO - Data validation artifact: DataValidationArtifact(validation_status=True, valid_train_file_path='Artifacts/06_18_2026_17_25_27/data_validation/validated/train.csv', valid_test_file_path='Artifacts/06_18_2026_17_25_27/data_validation/validated/test.csv', invalid_train_file_path='Artifacts/06_18_2026_17_25_27/data_validation/invalid/train.csv', invalid_test_file_path='Artifacts/06_18_2026_17_25_27/data_validation/invalid/test.csv', drift_report_file_path='Artifacts/06_18_2026_17_25_27/data_validation/drift_report/report.yaml')
+[2026-06-18 17:25:29,729] 28 networksecurity - INFO - Data Validation Artifact: DataValidationArtifact(validation_status=True, valid_train_file_path='Artifacts/06_18_2026_17_25_27/data_validation/validated/train.csv', valid_test_file_path='Artifacts/06_18_2026_17_25_27/data_validation/validated/test.csv', invalid_train_file_path='Artifacts/06_18_2026_17_25_27/data_validation/invalid/train.csv', invalid_test_file_path='Artifacts/06_18_2026_17_25_27/data_validation/invalid/test.csv', drift_report_file_path='Artifacts/06_18_2026_17_25_27/data_validation/drift_report/report.yaml')
+[2026-06-18 17:25:29,729] 46 networksecurity - INFO - Initiating data transformation
+[2026-06-18 17:25:29,750] 36 networksecurity - INFO - Numpy array saved: Artifacts/06_18_2026_17_25_27/data_transformation/transformed/train.npy
+[2026-06-18 17:25:29,751] 36 networksecurity - INFO - Numpy array saved: Artifacts/06_18_2026_17_25_27/data_transformation/transformed/test.npy
+[2026-06-18 17:25:29,753] 54 networksecurity - INFO - Object saved: Artifacts/06_18_2026_17_25_27/data_transformation/transformed_object/preprocessing.pkl
+[2026-06-18 17:25:29,753] 66 networksecurity - INFO - Data transformation complete — train shape: (17688, 31), test shape: (4422, 31)
+[2026-06-18 17:25:29,753] 34 networksecurity - INFO - Data Transformation Artifact: DataTransformationArtifact(transformed_object_file_path='Artifacts/06_18_2026_17_25_27/data_transformation/transformed_object/preprocessing.pkl', transformed_train_file_path='Artifacts/06_18_2026_17_25_27/data_transformation/transformed/train.npy', transformed_test_file_path='Artifacts/06_18_2026_17_25_27/data_transformation/transformed/test.npy')
+[2026-06-18 17:25:29,753] 37 networksecurity - INFO - ========== Training Pipeline Completed ==========

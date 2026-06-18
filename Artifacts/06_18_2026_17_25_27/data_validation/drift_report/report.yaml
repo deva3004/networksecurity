@@ -1,0 +1,140 @@
+Abnormal_URL:
+  drift_status: &id001 !!python/object/apply:numpy._core.multiarray.scalar
+  - !!python/object/apply:numpy.dtype
+    args:
+    - b1
+    - false
+    - true
+    state: !!python/tuple
+    - 3
+    - '|'
+    - null
+    - null
+    - null
+    - -1
+    - -1
+    - 0
+  - !!binary |
+    AA==
+  ks_statistic: 0.0003957485300768726
+  p_value: 1.0
+DNSRecord:
+  drift_status: *id001
+  ks_statistic: 0.00542740841248307
+  p_value: 0.9999321298038519
+Domain_registeration_length:
+  drift_status: *id001
+  ks_statistic: 0.011476707372229722
+  p_value: 0.7353423319035793
+Favicon:
+  drift_status: *id001
+  ks_statistic: 0.005031659882406142
+  p_value: 0.9999888959498077
+Google_Index:
+  drift_status: *id001
+  ks_statistic: 0.0037878787878787845
+  p_value: 0.99999999945476
+HTTPS_token:
+  drift_status: *id001
+  ks_statistic: 0.0009611035730438533
+  p_value: 1.0
+Iframe:
+  drift_status: *id001
+  ks_statistic: 0.0020352781546811444
+  p_value: 1.0
+Links_in_tags:
+  drift_status: *id001
+  ks_statistic: 0.01328584350972406
+  p_value: 0.5555063786183736
+Links_pointing_to_page:
+  drift_status: *id001
+  ks_statistic: 0.005766621438263231
+  p_value: 0.9997610012014628
+Page_Rank:
+  drift_status: *id001
+  ks_statistic: 0.017356399819086432
+  p_value: 0.23418306629314178
+Prefix_Suffix:
+  drift_status: *id001
+  ks_statistic: 0.006218905472636815
+  p_value: 0.9990674182373884
+Redirect:
+  drift_status: *id001
+  ks_statistic: 0.0100067842605156
+  p_value: 0.8669375646400233
+Request_URL:
+  drift_status: *id001
+  ks_statistic: 0.0008480325644504294
+  p_value: 1.0
+Result:
+  drift_status: *id001
+  ks_statistic: 0.01407734056987786
+  p_value: 0.48044663896911977
+RightClick:
+  drift_status: *id001
+  ks_statistic: 0.004918588873812753
+  p_value: 0.9999939100687764
+SFH:
+  drift_status: *id001
+  ks_statistic: 0.0014133876074173823
+  p_value: 1.0
+SSLfinal_State:
+  drift_status: *id001
+  ks_statistic: 0.015660334690185407
+  p_value: 0.34716238676438993
+Shortining_Service:
+  drift_status: *id001
+  ks_statistic: 0.00011307100859339614
+  p_value: 1.0
+Statistical_report:
+  drift_status: *id001
+  ks_statistic: 0.007914970601537757
+  p_value: 0.9783976116108054
+Submitting_to_email:
+  drift_status: *id001
+  ks_statistic: 0.011420171867933038
+  p_value: 0.7408527500256727
+URL_Length:
+  drift_status: *id001
+  ks_statistic: 0.003957485300768893
+  p_value: 0.9999999962612656
+URL_of_Anchor:
+  drift_status: *id001
+  ks_statistic: 0.016508367254636003
+  p_value: 0.28672735484965983
+age_of_domain:
+  drift_status: *id001
+  ks_statistic: 0.012833559475350476
+  p_value: 0.6000821390660234
+double_slash_redirecting:
+  drift_status: *id001
+  ks_statistic: 0.0007349615558570888
+  p_value: 1.0
+having_At_Symbol:
+  drift_status: *id001
+  ks_statistic: 0.010741745816372689
+  p_value: 0.8047373429702832
+having_IP_Address:
+  drift_status: *id001
+  ks_statistic: 0.007858435097241101
+  p_value: 0.9798953580695301
+having_Sub_Domain:
+  drift_status: *id001
+  ks_statistic: 0.012720488466757107
+  p_value: 0.6113493016762657
+on_mouseover:
+  drift_status: *id001
+  ks_statistic: 0.003957485300768879
+  p_value: 0.9999999962612656
+popUpWidnow:
+  drift_status: *id001
+  ks_statistic: 0.0020352781546811305
+  p_value: 1.0
+port:
+  drift_status: *id001
+  ks_statistic: 0.0045793758480325575
+  p_value: 0.9999992399051418
+web_traffic:
+  drift_status: *id001
+  ks_statistic: 0.0035617367706919922
+  p_value: 0.999999999973084
