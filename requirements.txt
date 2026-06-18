@@ -9,6 +9,6 @@ certifi
 pymongo[srv]
 pyyaml
 scipy
-
+mlflow
 
 ##-e .

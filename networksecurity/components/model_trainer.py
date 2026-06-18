@@ -1,4 +1,6 @@
 import sys
+import mlflow
+import mlflow.sklearn
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier, AdaBoostClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
@@ -7,6 +9,7 @@ from networksecurity.entity.config_entity import ModelTrainerConfig
 from networksecurity.entity.artifact_entity import (
     DataTransformationArtifact,
     ModelTrainerArtifact,
+    ClassificationMetricArtifact,
 )
 from networksecurity.exception.exception import NetworkSecurityException
 from networksecurity.logging.logger import logger
@@ -20,17 +23,17 @@ from networksecurity.utils.ml_utils.matrics.classification_metric import get_cla
 from networksecurity.utils.ml_utils.models.estimater import NetworkModel
 
 CANDIDATE_MODELS = {
-    "RandomForest":      RandomForestClassifier(random_state=42, n_jobs=-1),
-    "GradientBoosting":  GradientBoostingClassifier(random_state=42),
-    "AdaBoost":          AdaBoostClassifier(random_state=42),
-    "DecisionTree":      DecisionTreeClassifier(random_state=42),
+    "RandomForest":       RandomForestClassifier(random_state=42, n_jobs=-1),
+    "GradientBoosting":   GradientBoostingClassifier(random_state=42),
+    "AdaBoost":           AdaBoostClassifier(random_state=42),
+    "DecisionTree":       DecisionTreeClassifier(random_state=42),
     "LogisticRegression": LogisticRegression(max_iter=1000, random_state=42, n_jobs=-1),
 }
 
 PARAM_GRIDS = {
     "RandomForest": {
-        "n_estimators":    [64, 128, 256],
-        "max_depth":       [None, 8, 16],
+        "n_estimators":      [64, 128, 256],
+        "max_depth":         [None, 8, 16],
         "min_samples_split": [2, 5],
     },
     "GradientBoosting": {
@@ -63,6 +66,40 @@ class ModelTrainer:
         except Exception as e:
             raise NetworkSecurityException(e, sys)
 
+    def track_mlflow(
+        self,
+        model_name: str,
+        model,
+        best_params: dict,
+        train_metrics: ClassificationMetricArtifact,
+        test_metrics: ClassificationMetricArtifact,
+    ) -> None:
+        try:
+            mlflow.set_experiment("NetworkSecurity")
+
+            with mlflow.start_run(run_name=model_name):
+                mlflow.set_tag("model_name", model_name)
+
+                # Hyperparameters chosen by GridSearchCV
+                mlflow.log_params(best_params)
+
+                # Train metrics
+                mlflow.log_metric("train_f1",        train_metrics.f1_score)
+                mlflow.log_metric("train_precision",  train_metrics.precision_score)
+                mlflow.log_metric("train_recall",     train_metrics.recall_score)
+
+                # Test metrics
+                mlflow.log_metric("test_f1",         test_metrics.f1_score)
+                mlflow.log_metric("test_precision",   test_metrics.precision_score)
+                mlflow.log_metric("test_recall",      test_metrics.recall_score)
+
+                # Log the raw sklearn estimator (not the NetworkModel wrapper)
+                mlflow.sklearn.log_model(model, artifact_path="model")
+
+            logger.info("MLflow run logged for model: %s", model_name)
+        except Exception as e:
+            raise NetworkSecurityException(e, sys)
+
     def initiate_model_trainer(self) -> ModelTrainerArtifact:
         try:
             logger.info("Initiating model training with hyperparameter tuning")
@@ -80,8 +117,8 @@ class ModelTrainer:
                 param_grids=PARAM_GRIDS,
             )
 
-            best_name = max(report, key=lambda name: report[name]["test_f1"])
-            best_info = report[best_name]
+            best_name  = max(report, key=lambda name: report[name]["test_f1"])
+            best_info  = report[best_name]
             best_model = best_info["best_estimator"]
 
             logger.info("Best model: %s  (Test F1: %.4f)", best_name, best_info["test_f1"])
@@ -98,6 +135,15 @@ class ModelTrainer:
                 "[%s] Test  — F1: %.4f  Precision: %.4f  Recall: %.4f",
                 best_name, test_metrics.f1_score,
                 test_metrics.precision_score, test_metrics.recall_score,
+            )
+
+            # Track this run in MLflow
+            self.track_mlflow(
+                model_name=best_name,
+                model=best_model,
+                best_params=best_info["best_params"],
+                train_metrics=train_metrics,
+                test_metrics=test_metrics,
             )
 
             if test_metrics.f1_score < self.model_trainer_config.expected_accuracy:
