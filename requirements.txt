@@ -10,5 +10,8 @@ pymongo[srv]
 pyyaml
 scipy
 mlflow
+fastapi
+uvicorn
+python-multipart
 
 ##-e .

@@ -63,6 +63,8 @@ class DataTransformation:
             save_numpy_array_data(self.data_transformation_config.transformed_test_file_path, test_arr)
             save_object(self.data_transformation_config.transformed_object_file_path, preprocessor)
 
+            save_object("final_model/preprocessor.pkl", preprocessor)
+
             logger.info(
                 "Data transformation complete — train shape: %s, test shape: %s",
                 train_arr.shape, test_arr.shape,

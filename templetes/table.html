@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Network Security — Prediction Results</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #f0f2f5;
+      color: #1a1a2e;
+      min-height: 100vh;
+      padding: 32px 16px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 28px;
+      color: #1a1a2e;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── Summary cards ── */
+    .summary {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px 32px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      min-width: 150px;
+    }
+
+    .card .value {
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .card .label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #666;
+    }
+
+    .card.total   .value { color: #3a3a5c; }
+    .card.phish   .value { color: #e53935; }
+    .card.legit   .value { color: #2e7d32; }
+
+    /* ── Table wrapper ── */
+    .table-wrapper {
+      overflow-x: auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    thead th {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 12px 14px;
+      text-align: left;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    tbody tr:nth-child(even) { background: #f7f8fc; }
+    tbody tr:hover           { background: #eef0f9; }
+
+    tbody td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #e8e8e8;
+      white-space: nowrap;
+    }
+
+    /* ── Badge ── */
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+
+    .badge.phishing   { background: #fde8e8; color: #c62828; }
+    .badge.legitimate { background: #e8f5e9; color: #1b5e20; }
+
+    /* ── Upload form ── */
+    .upload-section {
+      max-width: 480px;
+      margin: 0 auto 36px;
+      background: #fff;
+      border-radius: 10px;
+      padding: 28px 32px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+
+    .upload-section h2 {
+      font-size: 1.1rem;
+      margin-bottom: 18px;
+      color: #1a1a2e;
+    }
+
+    .upload-section input[type="file"] {
+      display: block;
+      width: 100%;
+      margin-bottom: 14px;
+      font-size: 0.9rem;
+    }
+
+    .btn {
+      background: #1a1a2e;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 28px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn:hover { background: #2d2d5e; }
+
+    .empty {
+      text-align: center;
+      padding: 48px;
+      color: #999;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Network Security &mdash; Phishing Detection</h1>
+
+  <!-- Upload form (posts to /predict) -->
+  <div class="upload-section">
+    <h2>Upload CSV for Prediction</h2>
+    <form action="/predict" method="post" enctype="multipart/form-data">
+      <input type="file" name="file" accept=".csv" required />
+      <button class="btn" type="submit">Run Prediction</button>
+    </form>
+  </div>
+
+  {% if results %}
+
+  <!-- Summary cards -->
+  <div class="summary">
+    <div class="card total">
+      <div class="value">{{ results | length }}</div>
+      <div class="label">Total Records</div>
+    </div>
+    <div class="card phish">
+      <div class="value">{{ results | selectattr("prediction_label", "equalto", "phishing") | list | length }}</div>
+      <div class="label">Phishing</div>
+    </div>
+    <div class="card legit">
+      <div class="value">{{ results | selectattr("prediction_label", "equalto", "legitimate") | list | length }}</div>
+      <div class="label">Legitimate</div>
+    </div>
+  </div>
+
+  <!-- Results table -->
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          {% for col in results[0].keys() %}
+            {% if col not in ["Result", "prediction_label"] %}
+              <th>{{ col }}</th>
+            {% endif %}
+          {% endfor %}
+          <th>Result</th>
+          <th>Label</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in results %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          {% for col, val in row.items() %}
+            {% if col not in ["Result", "prediction_label"] %}
+              <td>{{ val }}</td>
+            {% endif %}
+          {% endfor %}
+          <td>{{ row["Result"] }}</td>
+          <td>
+            <span class="badge {{ row['prediction_label'] }}">
+              {{ row["prediction_label"] }}
+            </span>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% else %}
+  <div class="table-wrapper">
+    <p class="empty">No predictions yet. Upload a CSV file above to get started.</p>
+  </div>
+  {% endif %}
+
+</body>
+</html>

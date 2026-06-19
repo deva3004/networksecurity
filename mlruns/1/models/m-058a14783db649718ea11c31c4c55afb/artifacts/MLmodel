@@ -1,0 +1,23 @@
+artifact_path: /Users/devashish/Desktop/krish_ds/networkSecurity/mlruns/1/models/m-058a14783db649718ea11c31c4c55afb/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.skops
+    predict_fn: predict
+    python_version: 3.10.0
+  sklearn:
+    code: null
+    pickled_model: model.skops
+    serialization_format: skops
+    sklearn_version: 1.7.2
+    skops_trusted_types: null
+mlflow_version: 3.14.0
+model_id: m-058a14783db649718ea11c31c4c55afb
+model_size_bytes: 37521815
+model_uuid: m-058a14783db649718ea11c31c4c55afb
+prompts: null
+run_id: e0dff7fb30604f3982969e51499cfdaa
+utc_time_created: '2026-06-19 11:42:49.935340'

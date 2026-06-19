@@ -166,6 +166,8 @@ class ModelTrainer:
             save_object(self.model_trainer_config.trained_model_file_path, network_model)
             logger.info("Saved %s: %s", best_name, self.model_trainer_config.trained_model_file_path)
 
+            save_object("final_model/model.pkl", network_model)
+
             return ModelTrainerArtifact(
                 trained_model_file_path=self.model_trainer_config.trained_model_file_path,
                 train_metric_artifact=train_metrics,
